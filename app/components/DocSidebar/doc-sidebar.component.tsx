@@ -1,8 +1,12 @@
-"use client"
-import { tutorials } from "@/app/docs/[...slug]/tutorials"
-import { Bars3Icon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid"
-import Link from "next/link"
-import { useState } from "react"
+'use client'
+import { tutorials } from '@/app/docs/[...slug]/tutorials'
+import {
+  Bars3Icon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from '@heroicons/react/20/solid'
+import Link from 'next/link'
+import { useState } from 'react'
 
 type TDocSidebarProps = {
   prefix: string
@@ -15,20 +19,25 @@ export const DocSidebar = (props: TDocSidebarProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen)
 
-  const commonButtonClass = 'flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-100/10 text-white p-1.5 hover:bg-gray-100/[0.15]'
+  const commonButtonClass =
+    'flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-100/10 text-white p-1.5 hover:bg-gray-100/[0.15]'
 
-  const { params, activeTutorial, activeContent, prefix } = props;
+  const { params, activeTutorial, activeContent, prefix } = props
   return (
     <>
       <div
-        className={`fixed w-full backdrop-blur-sm z-[70] animate-menu-fade lg:w-[17rem] lg:backdrop-blur-none h-[calc(100svh-81px)] ${mobileMenuOpen ? 'visible' : 'hidden'} lg:block`}
+        className={`fixed z-[70] h-[calc(100svh-81px)] w-full animate-menu-fade backdrop-blur-sm lg:w-[17rem] lg:backdrop-blur-none ${mobileMenuOpen ? 'visible' : 'hidden'} lg:block`}
         onClick={toggleMobileMenu}
         aria-label='Global'
       >
-        <div className='bg-gray-900 relative w-4/6 sm:min-w-2/6 sm:w-3/6 md:w-2/6 lg:mx-auto h-full lg:w-full overflow-y-scroll p-8 border-r border-gray-50/[0.06]' >
-          <button type='button' className={`${commonButtonClass} h-8 w-8 rounded-lg absolute right-0 top-0 m-5 lg:hidden`} onClick={toggleMobileMenu} >
+        <div className='sm:min-w-2/6 relative h-full w-4/6 overflow-y-scroll border-r border-gray-50/[0.06] bg-gray-900 p-8 sm:w-3/6 md:w-2/6 lg:mx-auto lg:w-full'>
+          <button
+            type='button'
+            className={`${commonButtonClass} absolute right-0 top-0 m-5 h-8 w-8 rounded-lg lg:hidden`}
+            onClick={toggleMobileMenu}
+          >
             <span className='sr-only'>Close menu</span>
-            <ChevronLeftIcon className='h-6 w-6' aria-hidden='true' />
+            <ChevronLeftIcon className='w-6 h-6' aria-hidden='true' />
           </button>
           {tutorials.map((tutorial, index) => {
             return (
@@ -46,7 +55,7 @@ export const DocSidebar = (props: TDocSidebarProps) => {
                       >
                         {params.slug[1] === content.href &&
                           params.slug[0] === tutorial.tutorialId && (
-                            <div className='absolute -left-1 h-2 w-2 rounded-full bg-gray-200' />
+                            <div className='absolute w-2 h-2 bg-gray-200 rounded-full -left-1' />
                           )}
                         <span>{content.name}</span>
                       </Link>
@@ -60,18 +69,22 @@ export const DocSidebar = (props: TDocSidebarProps) => {
       </div>
 
       <div className='relative w-full overflow-hidden'>
-        <div className='lg:hidden w-full sticky top-0 z-[60] text-gray-400 text-sm flex items-center pl-6 h-12 bg-transparent border-b border-gray-50/[0.06]'>
-          <button className={`${commonButtonClass} mr-6 h-8 w-8 rounded-lg`} onClick={toggleMobileMenu}>
+        <div className='sticky top-0 z-[60] flex h-12 w-full items-center border-b border-gray-50/[0.06] bg-transparent pl-6 text-sm text-gray-400 lg:hidden'>
+          <button
+            className={`${commonButtonClass} mr-6 h-8 w-8 rounded-lg`}
+            onClick={toggleMobileMenu}
+          >
             <Bars3Icon width={16} />
           </button>
-          <span className='font-light mr-2'>
+          <span className='mr-2 font-light'>
             {tutorials[activeTutorial].title}
           </span>
           <ChevronRightIcon width={16} />
-          <span className='font-semibold ml-2 text-white'>
+          <span className='ml-2 font-semibold text-white'>
             {tutorials[activeTutorial].contents[activeContent].name}
           </span>
         </div>
       </div>
-    </>)
+    </>
+  )
 }

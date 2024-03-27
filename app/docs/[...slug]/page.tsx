@@ -48,22 +48,26 @@ export default async function Docs({ params }: { params: { slug: string } }) {
     return false
   }
 
-
   const previousContent = getPreviousContent()
   const nextContent = getNextContent()
   return (
     <>
-      <section className={`mx-auto w-full h-max`}>
-        <DocSidebar params={params} activeTutorial={activeTutorial} activeContent={activeContent} prefix={prefix} />
-        <div className='flex h-[calc(100svh-129px)] lg:h-[calc(100svh-81px)] w-full flex-col items-center overflow-y-scroll lg:pl-[19.5rem] pt-12'>
-          <div className='prose prose-invert flex w-full px-8 max-w-[100%] sm:max-w-[80%] xl:max-w-[70%] 2xl:max-w-[60%] flex-col'>
+      <section className={`mx-auto h-max w-full`}>
+        <DocSidebar
+          params={params}
+          activeTutorial={activeTutorial}
+          activeContent={activeContent}
+          prefix={prefix}
+        />
+        <div className='flex h-[calc(100svh-129px)] w-full flex-col items-center overflow-y-scroll pt-12 lg:h-[calc(100svh-81px)] lg:pl-[19.5rem]'>
+          <div className='prose prose-invert flex w-full max-w-[100%] flex-col px-8 sm:max-w-[80%] xl:max-w-[70%] 2xl:max-w-[60%]'>
             {!!tutorials[activeTutorial].contents[activeContent] &&
               tutorials[activeTutorial].contents[activeContent].component}
           </div>
-          <div className='mb-10 mt-20 px-6 flex w-full max-w-[100%] sm:max-w-[80%] xl:max-w-[70%] 2xl:max-w-[60%] justify-between text-base'>
+          <div className='mb-10 mt-20 flex w-full max-w-[100%] justify-between px-6 text-base sm:max-w-[80%] xl:max-w-[70%] 2xl:max-w-[60%]'>
             {!!previousContent && (
               <Link
-                className='flex flex-col items-start rounded-2xl p-2 text-left text-gray-400 transition ease-in-out hover:border-gray-300 hover:text-gray-200'
+                className='flex flex-col items-start p-2 text-left text-gray-400 transition ease-in-out rounded-2xl hover:border-gray-300 hover:text-gray-200'
                 href={`${prefix}/${previousContent.id}/${previousContent.content.href}`}
               >
                 <span className='text-gray-300'>
@@ -77,7 +81,7 @@ export default async function Docs({ params }: { params: { slug: string } }) {
             )}
             {!!nextContent && (
               <Link
-                className='ml-auto flex flex-col items-end rounded-2xl p-2 text-end text-gray-400 transition ease-in-out hover:border-gray-300 hover:text-gray-200'
+                className='flex flex-col items-end p-2 ml-auto text-gray-400 transition ease-in-out rounded-2xl text-end hover:border-gray-300 hover:text-gray-200'
                 href={`${prefix}/${nextContent.id}/${nextContent.content.href}`}
               >
                 <span className='text-gray-300'>
@@ -91,7 +95,7 @@ export default async function Docs({ params }: { params: { slug: string } }) {
             )}
           </div>
         </div>
-      </section >
+      </section>
     </>
   )
 }

@@ -1,1 +1,1 @@
-export {DocSidebar} from './doc-sidebar.component'
+export { DocSidebar } from './doc-sidebar.component'

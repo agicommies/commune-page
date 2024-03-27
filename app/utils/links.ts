@@ -5,4 +5,5 @@ export const links = {
   github: 'https://github.com/commune-ai',
   discord: 'https://discord.com/invite/A8JGkZ9Dmm',
   x: 'https://twitter.com/communeaidotorg',
+  telegram: 'https://t.me/communecommunity',
 }
