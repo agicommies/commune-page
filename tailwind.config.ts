@@ -10,13 +10,14 @@ const config: Config = {
     extend: {
       colors: {
         title: '#2E2F35',
+        titleDark: '#3B96FF',
         subtitle: '#58595D',
         'section-info': '#141414',
         'header-links': '#222222',
       },
       boxShadow: {
         custom: '3px 3px 0 0 rgba(46,47,53,1)',
-        customHover: '1px 1px 0 0 rgba(46,47,53,1)',
+        customDark: '3px 3px 0 0 rgba(59,150,255,1)',
       },
       animation: {
         fade: 'fadeOut 0.6s ease-in-out',
@@ -117,6 +118,7 @@ const config: Config = {
       },
     },
   },
+  darkMode: 'class',
   plugins: [require('@tailwindcss/typography')],
 }
 export default config
