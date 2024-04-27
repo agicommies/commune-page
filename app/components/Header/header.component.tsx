@@ -44,6 +44,7 @@ export const Header = () => {
   const commonButtonClass =
     'flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-100/10 text-title p-1.5 hover:bg-gray-100/[0.15] dark:bg-titleDark'
 
+
   return (
     <>
       <div

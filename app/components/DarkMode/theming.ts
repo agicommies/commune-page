@@ -1,66 +1,67 @@
 import { getCookie, setCookie } from "@/app/utils"
 
-enum Themes {
-  Light = 'light',
-  Dark = 'dark',
-}
-
 const THEME_KEY = 'theme'
-const DEFAULT_THEME = Themes.Light
 export const DARK_THEME_CLASSNAME = 'dark'
 export const LIGHT_THEME_CLASSNAME = 'light'
-export const SYSTEM_THEME_CLASSNAME = 'system'
 
-export type TThemes = typeof DARK_THEME_CLASSNAME| typeof LIGHT_THEME_CLASSNAME | typeof SYSTEM_THEME_CLASSNAME
+export type TThemes = typeof DARK_THEME_CLASSNAME| typeof LIGHT_THEME_CLASSNAME
 
 export function getStoredTheme() {
-  try {
-    return getCookie(THEME_KEY) as TThemes
-  } catch (error) {
-    return DEFAULT_THEME
+    const theme = getCookie(THEME_KEY) as TThemes
+    if(!theme) return setDefaultSystemTheme()
+    return theme
+}
+
+const setThemeCookie = (value: string) => {
+  return setCookie(THEME_KEY, value)
+}
+
+const setDefaultSystemTheme = () => {
+  if (isThemeSystemDark()) {
+    setThemeCookie(DARK_THEME_CLASSNAME)
+    return DARK_THEME_CLASSNAME
   }
+  
+  setThemeCookie(LIGHT_THEME_CLASSNAME)
+  return LIGHT_THEME_CLASSNAME
+}
+
+const removeThemeClassname = (themeClassName: TThemes) => {
+  if(themeClassName === LIGHT_THEME_CLASSNAME) return DARK_THEME_CLASSNAME
+  return LIGHT_THEME_CLASSNAME
 }
 
 export function setTheme(theme: TThemes) {
+
   const root = getHtml()
 
-  const setThemeCookie = (value: string) => {
-    setCookie('theme', value)
-  }
-
-  root.classList.remove(DARK_THEME_CLASSNAME)
-  root.classList.remove(LIGHT_THEME_CLASSNAME)
-
-  const setThemeCookieSystem = () => {
-    setThemeCookie(SYSTEM_THEME_CLASSNAME)
-
-    if (isDarkSystemTheme()) {
-      root.classList.add(DARK_THEME_CLASSNAME)
-    }
-  }
+  root.classList.remove(removeThemeClassname(theme))
 
   const setThemeCookieDark = () => {
     root.classList.add(DARK_THEME_CLASSNAME)
-    setThemeCookie(DARK_THEME_CLASSNAME)
+    return setThemeCookie(DARK_THEME_CLASSNAME)
   }
 
-  const changeTheme = (theme: TThemes) => {
-    const themeList = {
-      'system': () => setThemeCookieSystem(),
-      'dark': () => setThemeCookieDark(),
-      'light': () => setThemeCookie(LIGHT_THEME_CLASSNAME)
-    } 
-
-    return themeList[theme || 'light']
+  const setThemeCookieLight = () => {
+    root.classList.add(LIGHT_THEME_CLASSNAME)
+    return setThemeCookie(LIGHT_THEME_CLASSNAME)
   }
 
-  changeTheme(theme)()
+  switch(theme){
+    case DARK_THEME_CLASSNAME:
+      setThemeCookieDark()
+      break;
+    case LIGHT_THEME_CLASSNAME:
+      setThemeCookieLight()
+      break;
+  }
 }
 
 function getHtml() {
   return document.firstElementChild as HTMLHtmlElement
 }
 
-export function isDarkSystemTheme() {
+export function isThemeSystemDark() {
   return window.matchMedia('(prefers-color-scheme: dark)').matches
+
 }
